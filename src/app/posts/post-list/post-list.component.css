@@ -1,9 +1,13 @@
+/* 1rem = 16px */
 :host{
   display: block;
   margin-top: 1rem;
 }
 .info-text{
   text-align: center;
+}
+mat-paginator{
+  margin-top: 1rem;
 }
 mat-spinner{
   margin: auto;

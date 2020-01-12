@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
@@ -18,22 +19,38 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   posts: Post[] = [];
+  totalPosts = 0;
+  postsPerPage = 2;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
   private postsSub: Subscription;
 
   constructor(private postsServive: PostsService) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.postsServive.getPosts();
+    this.postsServive.getPosts(this.postsPerPage, this.currentPage);
     this.postsSub = this.postsServive.getPostUpdateListener()
-      .subscribe( (posts: Post[]) => {
+      .subscribe( (postData: {posts: Post[], postCount: number}) => {
         this.isLoading = false;
-        this.posts = posts;
+        this.totalPosts = postData.postCount;
+        this.posts = postData.posts;
       });
   }
 
+  onChangedPage(pageData: PageEvent) {
+    this.isLoading = true;
+    // console.log(pageData);
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.postsServive.getPosts(this.postsPerPage, this.currentPage);
+  }
+
   onDelete(postId: string) {
-    this.postsServive.deletePost(postId);
+    this.isLoading = true;
+    this.postsServive.deletePost(postId).subscribe(() => {
+      this.postsServive.getPosts(this.postsPerPage, this.currentPage);
+    });
   }
 
   ngOnDestroy() {
