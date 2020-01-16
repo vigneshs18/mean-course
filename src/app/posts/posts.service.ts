@@ -25,13 +25,15 @@ export class PostsService {
               title: post.title,
               content: post.content,
               id: post._id,
-              imagePath: post.imagePath
+              imagePath: post.imagePath,
+              creator: post.creator
             };
           }),
           maxPosts: responseData.maxPosts
         };
       }))
       .subscribe((transformedData) => {
+        console.log(transformedData);
         this.posts = transformedData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],
@@ -71,7 +73,7 @@ export class PostsService {
 
   updatePost(id: string, title: string, content: string, image: File | string){
     let postData: Post | FormData;
-    if (typeof image === 'object'){
+    if (typeof image === 'object') {
       postData = new FormData();
       postData.append('id', id);
       postData.append('title', title);
@@ -82,7 +84,8 @@ export class PostsService {
         id: id,
         title: title,
         content: content,
-        imagePath: image
+        imagePath: image,
+        creator: null
       };
     }
     this.http

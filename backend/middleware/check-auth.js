@@ -6,7 +6,8 @@ module.exports = (req, res, next) => {
         // req.headers.authorization - should be written like this only otherwise it throw an error 
         // note : same header name as provided in interceptor()
         // note : headers are not case snsitive.
-        jwt.verify(token, 'my-secret-key');
+        const decodedToken = jwt.verify(token, 'my-secret-key');
+        req.userData = {email: decodedToken.email, userId: decodedToken.id};
         next();
     } catch (error) {
         res.status(401).json({
