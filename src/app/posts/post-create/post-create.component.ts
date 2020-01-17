@@ -9,7 +9,7 @@ import { mimeType } from './mime-type.validator';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
-  selector: 'app-post-create',
+  // selector: 'app-post-create',
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.css']
 })

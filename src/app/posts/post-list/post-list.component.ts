@@ -7,7 +7,7 @@ import { PostsService } from '../posts.service';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
-  selector: 'app-post-list',
+  // selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
