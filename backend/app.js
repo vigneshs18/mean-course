@@ -8,7 +8,7 @@ const usersRoutes = require('./routes/users');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/mean', {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://3.6.132.221/mean', {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
   console.log('Connected to MongoDB...')
 })
@@ -18,7 +18,7 @@ mongoose.connect('mongodb://localhost/mean', {useCreateIndex: true, useNewUrlPar
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/images', express.static(path.join('backend/images')));
+app.use('/images', express.static(path.join('images')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
